@@ -84,7 +84,7 @@ describe("Final Test", () => {
     const swapFee = "135";
 
     //Deploy CatDoge (token)
-    cd = await deployer("Token", name, symbol, totalSupply, decimals, reflectionFee, swapFee) as Token;
+    cd = await deployer("Token", name, symbol, totalSupply, decimals, reflectionFee, swapFee, { gasLimit: 3000000 }) as Token;
 
     //Set swap paths
     pathBuy[0] = await router.WETH();
@@ -103,7 +103,7 @@ describe("Final Test", () => {
     const minBuyLimit = toWei(0.01);   //in BNB 
 
     //Deploy Presale
-    cdps = (await deployer("Presale", _rate, wallet, token, openingTime, closingTime, caps, minBuyLimit)) as Presale;
+    cdps = (await deployer("Presale", _rate, wallet, token, openingTime, closingTime, caps, minBuyLimit, { gasLimit: 3000000 })) as Presale;
   });
 
   describe("Basic token test", async () => {

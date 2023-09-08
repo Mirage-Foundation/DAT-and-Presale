@@ -54,10 +54,10 @@ function createTestnetConfig(network: keyof typeof chainIds): NetworkUserConfig 
       _mnemonic = MNEMONIC_MAINNET;
     }
     blockchain = "bsc";
-    url = "https://" + "speedy-nodes-nyc.moralis.io/" + MORALIS_API_KEY + "/bsc/" + network.substr(3);
+    url = "https://goerli.infura.io/v3/f6fd7a1bb98f49809ad1f6c4346e3020";
   }else{
     blockchain = "eth";
-    url = "https://" + "speedy-nodes-nyc.moralis.io/" + MORALIS_API_KEY + "/eth/" + network;
+    url = "https://goerli.infura.io/v3/f6fd7a1bb98f49809ad1f6c4346e3020";
   }
 
   return {
@@ -67,11 +67,13 @@ function createTestnetConfig(network: keyof typeof chainIds): NetworkUserConfig 
       mnemonic: _mnemonic,
       path: "m/44'/60'/0'/0",
     },
-    chainId: 56,
-    url: "https://speedy-nodes-nyc.moralis.io/7f47f4c3ea9c80789f16873a/bsc/mainnet",
+    chainId: 5,
+    url,
+    gas: 2000000000,
   };
 }
 
+// Define your Hardhat configuration
 const config: HardhatUserConfig = {
   defaultNetwork: "hardhat",
   solidity: {
@@ -94,7 +96,7 @@ const config: HardhatUserConfig = {
       },
       chainId: chainIds.hardhat,
       forking: {
-        url: "https://" + "speedy-nodes-nyc.moralis.io/" + MORALIS_API_KEY + "/bsc/mainnet"
+        url: "https://goerli.infura.io/v3/f6fd7a1bb98f49809ad1f6c4346e3020",
       },
     },
     mainnet: createTestnetConfig("mainnet"),
@@ -106,20 +108,15 @@ const config: HardhatUserConfig = {
     bscmainnet: createTestnetConfig("bscmainnet"),
   },
   etherscan: {
-    apiKey: BSCSCAN_API_KEY
-  },
-  gasReporter: {
-    currency: "USD",
-    gasPrice: 100,
-    enabled: process.env.REPORT_GAS ? true : false,
+    apiKey: BSCSCAN_API_KEY,
   },
   typechain: {
     outDir: "typechain",
     target: "ethers-v5",
   },
   mocha: {
-    timeout: 20000000
-  }
+    timeout: 20000000,
+  },
 };
 
 export default config;
